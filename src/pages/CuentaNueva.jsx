@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function CuentaNueva() {
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const [nombre, setNombre] = useState("");
+  const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
   async function enviarFormulario(e) {
     e.preventDefault();
     console.log(correo);
