@@ -12,9 +12,6 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    console.log("hola kevin");
-    console.log(email);
-    console.log(password);
     try {
       const respuesta = await fetch(
         "https://api-funval-g6.onrender.com/auth/login",
@@ -31,11 +28,17 @@ export default function Login() {
       );
 
       const data = await respuesta.json();
+      console.log(data);
       if (!respuesta.ok) {
         throw new Error(data.message || "credenciales incorrectas");
       }
       localStorage.setItem("token", data.access_token);
-      navigate("/Home");
+      localStorage.setItem("role", data.user_role);
+      if (data.user_role === "admin") {
+        navigate("/Home");
+      } else {
+        navigate("/Cliente");
+      }
     } catch (err) {
       setError(err.message);
     } finally {
